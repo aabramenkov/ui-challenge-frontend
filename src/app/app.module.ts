@@ -13,13 +13,16 @@ import { HttpClientModule } from '@angular/common/http';
 import { AlertifyService } from './_services/alertify.service';
 import { HomeComponent } from './home/home.component';
 import { RegisterComponent } from './register/register.component';
+import { ArticlesComponent } from './articles/articles.component';
+import { ArticlesResolver } from './_resolvers/articles.resolver';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavComponent,
     HomeComponent,
-    RegisterComponent
+    RegisterComponent,
+    ArticlesComponent
   ],
   imports: [
     BrowserModule,
@@ -30,7 +33,7 @@ import { RegisterComponent } from './register/register.component';
     HttpClientModule,
     BsDropdownModule.forRoot(),
   ],
-  providers: [AlertifyService],
+  providers: [AlertifyService, ArticlesResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
