@@ -6,16 +6,15 @@ import { environment } from '../../environments/environment';
 import { User } from '../_models/user';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
   baseUrl = environment.apiUrl;
   jwtHelper = new JwtHelperService();
   decodedToken: any;
-  currentUser: User;
+  currentUser: User | null = null;
 
   constructor(private http: HttpClient) {}
-
 
   login(model: any) {
     return this.http.post(this.baseUrl + 'users/login', model).pipe(
@@ -37,6 +36,9 @@ export class AuthService {
 
   loggedIn() {
     const token = localStorage.getItem('token');
-    return !this.jwtHelper.isTokenExpired(token);
+    if (token) {
+      return !this.jwtHelper.isTokenExpired(token);
+    }
+    return false;
   }
 }

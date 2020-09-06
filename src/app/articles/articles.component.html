@@ -1,1 +1,19 @@
-<h1>here will be all articles</h1>
+<button type="button" class="btn btn-secondary" (click)="createNewArticle()">Create new Article</button>
+<table>
+  <th>Title</th>
+  <th>Description</th>
+  <th>Created</th>
+  <th>Favorite Count</th>
+  <th></th>
+  <tr *ngFor="let article of articles">
+    <td>{{ article.title }}</td>
+    <td>{{ article.description }}</td>
+    <td>{{ article.favoriteCount }}</td>
+    <td>{{ article.title }}</td>
+    <td>
+      <button type="button" class="btn btn-secondary btn-sm" (click)="openArticle(article.slug)">Open</button>
+      <button type="button" class="btn btn-primary btn-sm" (click)="editArticle(article.slug)">Edit</button>
+      <button type="button" class="btn btn-danger btn-sm" (click)="deleteArticle(article.slug)">Delete</button>
+    </td>
+  </tr>
+</table>

@@ -1,0 +1,12 @@
+<div class="card">
+    <div class="card-header">
+        <img class="commentAvatar" src="{{comment.author.image || '../../assets/user.png'}}" alt="">
+        <div>Created: {{ comment.created |date }} by {{ comment.author.username}}</div>
+    </div>
+    <div class="card-body">
+      <p class="card-text">{{ comment.body }}</p>
+    </div>
+    <div class="card-footer text-muted">
+      <button type="button" class="btn btn-secondary btn-sm" (click)="onDeleteComment(comment.id)">Delete</button>
+    </div>
+  </div>

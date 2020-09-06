@@ -1,8 +1,8 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { AuthService } from '../_services/auth.service';
-import { AlertifyService } from '../_services/alertify.service';
+import { AuthService } from '../../_services/auth.service';
+import { AlertifyService } from '../../_services/alertify.service';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { User } from '../_models/user';
+import { User } from '../../_models/user';
 import { Router } from '@angular/router';
 
 @Component({
@@ -12,8 +12,7 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent implements OnInit {
   @Output() cancelRegister = new EventEmitter();
-  user: User;
-  registerForm: FormGroup;
+  public registerForm!: FormGroup;
 
   constructor(private authService: AuthService, private router: Router,
               private alertify: AlertifyService, private fb: FormBuilder) { }
@@ -32,7 +31,7 @@ export class RegisterComponent implements OnInit {
   }
 
   passwordMatchValidator(g: FormGroup) {
-    return g.get('password').value === g.get('confirmPassword').value ? null : {'mismatch': true};
+    return g.get('password')?.value === g.get('confirmPassword')?.value ? null : {mismatch: true};
   }
 
   register() {
