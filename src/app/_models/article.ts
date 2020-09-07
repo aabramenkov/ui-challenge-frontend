@@ -1,14 +1,14 @@
 import { Comment } from './comment';
 
 export interface Article {
-  id: number;
+  id?: number;
   title: string;
   body: string;
   description: string;
-  slug: string;
+  slug?: string;
   tagList: string[];
-  favoriteCount: number;
-  created: Date;
-  updated: Date;
+  favoriteCount?: number;
+  created?: Date;
+  updated?: Date;
   comments: Comment[];
 }

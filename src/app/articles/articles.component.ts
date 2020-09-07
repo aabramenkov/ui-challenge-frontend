@@ -24,17 +24,34 @@ export class ArticlesComponent implements OnInit {
       this.articles = data.articles.articles;
     });
   }
-  createNewArticle() {}
+  createNewArticle() {
+    const article: Article = {
+      title: '',
+      description: '',
+      body: '',
+      tagList: [],
+      comments: [],
+    };
+    this.articleService.createArticle(article).subscribe(
+      (articleFromServer: Article) => {
+        this.router.navigate(['/article/edit/' + articleFromServer.slug]);
+      },
+      () => {
+        this.alertify.error('Error on creating Article');
+      }
+    );
+  }
 
   editArticle(slug: string) {
-    
+    this.router.navigate(['/article/edit/' + slug]);
   }
-  openArticle(slug: string){
+
+  openArticle(slug: string) {
     this.router.navigate(['/article/' + slug]);
   }
 
   deleteArticle(slug: string) {
-    if (!this.authService.loggedIn()){
+    if (!this.authService.loggedIn()) {
       this.alertify.error('Only authorized users can delete article');
       return;
     }

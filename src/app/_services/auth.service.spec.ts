@@ -5,8 +5,6 @@ import { AuthService } from './auth.service';
 import { environment } from 'src/environments/environment';
 import { HttpResponse } from '@angular/common/http';
 import { HttpTestingController, HttpClientTestingModule } from '@angular/common/http/testing';
-import { ok } from 'assert';
-import { not } from '@angular/compiler/src/output/output_ast';
 
 describe('AuthService', () => {
   let authService: AuthService;

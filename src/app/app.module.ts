@@ -19,6 +19,11 @@ import { ArticleResolver } from './_resolvers/article.resolver';
 import { HomeComponent } from './home/home/home.component';
 import { RegisterComponent } from './home/register/register.component';
 import { CommentComponent } from './article/comment/comment.component';
+import { AuthorizedDirective } from './_directives/authorized.directive';
+import { ArticleEditComponent } from './article-edit/article-edit.component';
+import { ProfileComponent } from './profile/profile.component';
+import { UserEditResolver } from './_resolvers/user-edit.resolver';
+import { TagsComponent } from './tags/tags.component';
 
 export function tokenGetter() {
   return localStorage.getItem('token');
@@ -32,7 +37,11 @@ export function tokenGetter() {
     RegisterComponent,
     ArticlesComponent,
     ArticleComponent,
-    CommentComponent
+    CommentComponent,
+    AuthorizedDirective,
+    ArticleEditComponent,
+    ProfileComponent,
+    TagsComponent,
   ],
   imports: [
     BrowserModule,
@@ -51,7 +60,7 @@ export function tokenGetter() {
 
     BsDropdownModule.forRoot(),
   ],
-  providers: [AlertifyService, ArticlesResolver, ArticleResolver],
+  providers: [AlertifyService, ArticlesResolver, ArticleResolver, UserEditResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

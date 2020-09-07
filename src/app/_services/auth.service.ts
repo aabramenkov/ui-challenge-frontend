@@ -4,6 +4,7 @@ import { map } from 'rxjs/operators';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { environment } from '../../environments/environment';
 import { User } from '../_models/user';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -13,6 +14,7 @@ export class AuthService {
   jwtHelper = new JwtHelperService();
   decodedToken: any;
   currentUser: User | null = null;
+  loginStatus$ = new BehaviorSubject<boolean>(this.loggedIn());
 
   constructor(private http: HttpClient) {}
 
@@ -25,6 +27,7 @@ export class AuthService {
           localStorage.setItem('user', JSON.stringify(resp.user));
           this.decodedToken = this.jwtHelper.decodeToken(resp.user.token);
           this.currentUser = resp.user;
+          this.loginStatus$.next(true);
         }
       })
     );
@@ -34,7 +37,15 @@ export class AuthService {
     return this.http.post(this.baseUrl + 'users', user);
   }
 
-  loggedIn() {
+  logout() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    this.decodedToken = null;
+    this.currentUser = null;
+    this.loginStatus$.next(false);
+  }
+
+  loggedIn(): boolean {
     const token = localStorage.getItem('token');
     if (token) {
       return !this.jwtHelper.isTokenExpired(token);

@@ -2,25 +2,25 @@
     <div class="container">
       <a class="navbar-brand" [routerLink]="['/home']">Home</a>
   
-      <ul *ngIf="loggedIn()" class="navbar-nav mr-auto">
+      <ul class="navbar-nav mr-auto">
         <li class="nav-item" routerLinkActive="active">
           <a class="navbar-brand" [routerLink]="['/articles']">Articles</a>
-          <a class="navbar-brand" [routerLink]="['/Profiles']">Profiles</a>
-          <a class="navbar-brand" [routerLink]="['/Users']">Users</a>
-          <a class="navbar-brand" [routerLink]="['/Tags']">Tags</a>
+          <ng-container *ngIf="loggedIn()">
+            <a class="navbar-brand" [routerLink]="['/tags']">Tags</a>
+          </ng-container> 
         </li>
       </ul>
   
       <div *ngIf="loggedIn()" class="dropdown" dropdown>
         <span class="mr-1">
-          <img src="{{model.image || '../../assets/user.png'}}" alt="">
+          <img src="{{photoUrl || '../../assets/user.png'}}" alt="">
         </span>
         <a class="dropdown-toggle text-light" dropdownToggle>
           Welcome {{authService.decodedToken?.username | titlecase}}
         </a>
   
         <div class="dropdown-menu mt-3" *dropdownMenu>
-          <a class="dropdown-item" [routerLink]="['/member/edit']">
+          <a class="dropdown-item" [routerLink]="['/profile/edit']">
             <i class="fa fa-user"></i> Edit Profile</a>
           <div class="dropdown-divider"></div>
           <a class="dropdown-item" (click)="logout()">

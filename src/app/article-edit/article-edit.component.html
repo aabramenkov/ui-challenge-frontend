@@ -1,0 +1,27 @@
+<div class="container">
+    <form [formGroup]="articleForm" id="articleForm" (ngSubmit)="UpdateArticle()">
+
+        <div class="form-group">
+            <label for="title">Title</label>
+            <input type="text" class="form-control" formControlName="title" id="title" placeholder="title">
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="description" formControlName="description" placeholder="description">
+        </div>
+
+        <div class="form-group">
+            <label for="body">Body</label>
+            <textarea class="form-control" id="body" formControlName="body" rows="10"></textarea>
+        </div>
+
+        <div class="form-group">
+            <label for="tagList">Tags (use comma to separate tags)</label>
+            <input type="text" class="form-control" id="tagList" formControlName="tagList">
+        </div>
+
+        <button type="submit" class="btn btn-primary mb-2" type="submit" [disabled]="!articleForm.valid">Update Article</button>
+    </form>
+</div>
+

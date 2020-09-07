@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Article } from '../../_models/article';
 import { ArticleService } from 'src/app/_services/article.service';
 import { AlertifyService } from 'src/app/_services/alertify.service';
+import { AuthService } from 'src/app/_services/auth.service';
 
 @Component({
   selector: 'app-article',
@@ -17,7 +18,8 @@ export class ArticleComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private articleService: ArticleService,
-    private alertify: AlertifyService
+    private alertify: AlertifyService,
+    private authService: AuthService
   ) {}
 
   ngOnInit(): void {
@@ -31,7 +33,11 @@ export class ArticleComponent implements OnInit {
   }
 
   submitNewComment(commentBody: string) {
-    if (commentBody) {
+    if (!this.authService.loggedIn()){
+      this.alertify.error('Only registered users can leave comment');
+      return;
+    }
+    if (commentBody && this.article.slug) {
       this.articleService
         .createComment(commentBody, this.article.slug)
         .subscribe(
@@ -47,11 +53,22 @@ export class ArticleComponent implements OnInit {
     }
   }
   deleteComment(id: number) {
+    if (!this.article.slug) {
+      return;
+    }
+    if (!this.authService.loggedIn()){
+      this.alertify.error('Only registered users can delete comment');
+      return;
+    }
+
     this.articleService.deleteComment(id, this.article.slug).subscribe(
       () => {
         for (const comment of this.article.comments) {
           if (comment.id === id) {
-            this.article.comments.splice(this.article.comments.indexOf(comment), 1);
+            this.article.comments.splice(
+              this.article.comments.indexOf(comment),
+              1
+            );
             break;
           }
         }

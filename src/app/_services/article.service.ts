@@ -20,8 +20,13 @@ export class ArticleService {
     return this.http.get<Article>(this.baseUrl + 'articles/' + slug);
   }
 
-  public createArticle() {}
-  public updateArticle() {}
+  public createArticle(article: Article): Observable<Article> {
+    return this.http.post<Article>(this.baseUrl + 'articles', article);
+  }
+
+  public updateArticle(article: Article): Observable<Article> {
+    return this.http.put<Article>(this.baseUrl + 'articles/' + article.slug, article);
+  }
 
   public deleteArticle(slug: string) {
     return this.http.delete(this.baseUrl + 'articles/' + slug);
